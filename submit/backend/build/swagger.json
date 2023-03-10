@@ -1,0 +1,228 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Submit API",
+        "description": "App to submit jokes",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "20.90.189.81",
+    "basePath": "",
+    "tags": [
+        {
+            "name": "Jokes",
+            "description": "API adding jokes"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "definitions": {
+        "Joke": {
+            "required": [
+                "_id",
+                "setup",
+                "punchline",
+                "type",
+                "approvalStatus"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "setup": {
+                    "type": "string"
+                },
+                "punchline": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "number"
+                },
+                "approvalStatus": {
+                    "type": "string"
+                }
+            }
+        },
+        "Jokes": {
+            "type": "array",
+            "$ref": "#/definitions/Joke"
+        },
+        "CreateJokeDTO": {
+            "required": [
+                "type",
+                "setup",
+                "punchline"
+            ],
+            "properties": {
+                "setup": {
+                    "type": "string"
+                },
+                "punchline": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "number"
+                }
+            }
+        }
+    },
+    "paths": {
+        "/joke": {
+            "get": {
+                "tags": ["Jokes"],
+                "summary": "Returns all jokes with a 'pending' status.",
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Jokes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags":["Jokes"],
+                "summary": "Creates a new joke.",
+                "parameters": [
+                    {
+                        "name": "joke",
+                        "in": "body",
+                        "description": "Type of the joke",
+                        "schema": {
+                            "$ref": "#/definitions/CreateJokeDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/Joke"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "type": "boolean"
+                    }
+                }
+            }
+        },
+        "/joke/{id}":{
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Id of the joke",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Jokes"
+                ],
+                "summary": "Gets a single joke by its id.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Joke"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Jokes"
+                ],
+                "summary": "Deletes an existing joke.",
+                "responses": {
+                    "201": {
+                        "description": "Deleted",
+                        "type": "boolean"
+                    },
+                    "406": {
+                        "description": "Not Found",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Jokes"
+                ],
+                "summary": "Updates an existing joke.",
+                "responses": {
+                    "200": {
+                        "description": "Updated",
+                        "schema": {
+                            "$ref": "#/definitions/Joke"
+                        }
+                    },
+                    "406": {
+                        "description": "Not Found",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "/joke/{approvalStatus}/{id}": {
+            "parameters": [
+                {
+                    "name": "approvalStatus",
+                    "in": "path",
+                    "description": "New value approvalStatus (possible values: pending, approved, declined)",
+                    "type": "string"
+                },
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Id of the joke",
+                    "type": "string"
+                }
+            ],
+            "put": {
+                "tags": [
+                    "Jokes"
+                ],
+                "summary": "Change approval status of joke.",
+                "responses": {
+                    "200": {
+                        "description": "Updated",
+                        "schema": {
+                            "$ref": "#/definitions/Joke"
+                        }
+                    },
+                    "406": {
+                        "description": "Not Found",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "/joke/all": {
+            "get": {
+                "tags": ["Jokes"],
+                "summary": "Returns all jokes, including accepted and rejected ones.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Jokes"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "submit-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon ./src/app.js",
+    "deploy": "sh ./deploy.sh",
+    "logs": "sh logs.sh",
+    "build": "rm -rf ./build/* && cp -R ./src ./build && cp -R ./public ./build && cp ./{package.json,Dockerfile,swagger.json} ./build"
+  },
+  "author": "Emil Weber",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongoose": "^6.9.2",
+    "nodemon": "^2.0.20",
+    "swagger-ui-express": "^4.6.1"
+  }
+}

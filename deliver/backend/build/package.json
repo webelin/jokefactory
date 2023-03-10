@@ -1,0 +1,25 @@
+{
+  "name": "deliver-ms-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./src/app.js",
+  "scripts": {
+    "start": "nodemon ./src/app.js",
+    "build": "cp -R ../frontend/ ./public && cp -R ./src ./build && cp -R ./public ./build && cp ./package.json ./build && cp ./Dockerfile ./build && cp ./swagger.json ./build",
+    "deploy": "sh deploy.sh",
+    "logs": "sh logs.sh"
+  },
+  "author": "Emil Weber",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mysql2": "^3.1.2",
+    "nodemon": "^2.0.20",
+    "path": "^0.12.7",
+    "swagger-autogen": "^2.23.1",
+    "swagger-ui-express": "^4.6.2",
+    "util": "^0.12.5"
+  },
+  "description": ""
+}

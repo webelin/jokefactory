@@ -1,0 +1,109 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Delivery MS",
+    "description": "App to deliver jokes",
+    "version": "1.0.0"
+  },
+  "host": "20.21.246.173",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "definitions": {
+    "Joke": {
+      "required": [
+        "setup",
+        "punchline",
+        "type",
+        "approvalStatus"
+      ],
+      "properties": {
+        "setup": {
+          "type": "string"
+        },
+        "punchline": {
+          "type": "string"
+        },
+        "type": {
+          "type": "number"
+        },
+        "approvalStatus": {
+          "type": "string"
+        }
+      }
+    },
+    "Jokes": {
+      "type": "array",
+      "$ref": "#/definitions/Joke"
+    }
+  },
+  "paths": {
+    "/jokes/type={type}/{count}/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "count",
+            "in": "path",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Joke"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "error": "string"
+            }
+          }
+        }
+      }
+    },
+    "/getTypes": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/joke": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+          "name": "joke",
+          "in": "body",
+          "description": "Type of the joke",
+          "schema": {
+            "$ref": "#/definitions/Joke"
+          }
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  }
+}
